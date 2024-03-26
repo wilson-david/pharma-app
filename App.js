@@ -1,11 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import * as Svg from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
+import Button from './components/button';
 
 export default function App() {
 
 
-  
+  //funcion que valida el usuario ingresado
+  const validar_user = () => {
+
+    fetch(`http://localhost:3000/usuario/getUser`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({user})
+      })
+        .then(res => res.json())
+        .then(responseData => {
+          // console.log(responseData['usuario']);
+          
+        });
+  }
 
   return (
     <View style={styles.container}>
@@ -13,6 +27,7 @@ export default function App() {
       <Text style={styles.subTitle}>Sing In to  your account</Text>
       <TextInput style={styles.textInput} placeholder='example@gmail.com'></TextInput>
       <TextInput style={styles.textInput} placeholder='Password'></TextInput>
+      <Button />
       <StatusBar style="auto" />
     </View>
   );
