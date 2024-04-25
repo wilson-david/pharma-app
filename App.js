@@ -1,24 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Button from './components/Button';
-
+import axios from 'axios';
 
 export default function App() {
+  const API_URL = 'http://192.168.56.1:3000/api';
 
+  const validarUser = async () => {
+    try {
+      const email = 'example@gmail.com'; // Obtener el valor del campo de entrada de correo electrónico
+      const password = 'password'; // Obtener el valor del campo de entrada de contraseña
+      console.log(`${API_URL}/registros`);
+      // Realizar una solicitud POST a la ruta '/login' en tu servidor
+      const response = await axios.post(`${API_URL}/registros`, { email, password });
 
-  //funcion que valida el usuario ingresado
-  const validarUser = () => {
-    fetch('http://localhost:3000/usuario/getUser') // Reemplaza '192.168.1.2' con la dirección IP de tu servidor
-      .then(response => response.json())
-      .then(data => {
-        // Actualiza el estado con los datos del usuario recibidos del servidor
-        // setUserData(data);
-      })
-      .catch(error => {
-        console.error('Error al obtener el usuario:', error);
-      });
+      console.log('Respuesta del servidor:', response.data); // Imprimir la respuesta del servidor en la consola
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+    }
   };
-  
 
   return (
     <View style={styles.container}>
