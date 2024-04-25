@@ -1,32 +1,35 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
-import Button from './components/Button';
-import axios from 'axios';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import Index from './Index';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const API_URL = 'http://192.168.56.1:3000/api';
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Index" component={Index} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
+function LoginScreen({ navigation }) {
   const validarUser = async () => {
-    try {
-      const email = 'example@gmail.com'; // Obtener el valor del campo de entrada de correo electrónico
-      const password = 'password'; // Obtener el valor del campo de entrada de contraseña
-      console.log(`${API_URL}/registros`);
-      // Realizar una solicitud POST a la ruta '/login' en tu servidor
-      const response = await axios.post(`${API_URL}/registros`, { email, password });
-
-      console.log('Respuesta del servidor:', response.data); // Imprimir la respuesta del servidor en la consola
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-    }
+    navigation.navigate('Index');
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Hello</Text>
-      <Text style={styles.subTitle}>Sing In to  your account</Text>
-      <TextInput style={styles.textInput} placeholder='example@gmail.com'></TextInput>
-      <TextInput style={styles.textInput} placeholder='Password'></TextInput>
-      <Button onPress={validarUser} />
+      <Text style={styles.subTitle}>Sign In to your account</Text>
+      <TextInput style={styles.textInput} placeholder='example@gmail.com' />
+      <TextInput style={styles.textInput} placeholder='Password' />
+      <Button title="Sign In" onPress={validarUser} />
       <StatusBar style="auto" />
     </View>
   );
@@ -44,12 +47,10 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold'
   },
-
   subTitle:{
     fontSize: 30,
     color: 'gray'
   },
-
   textInput:{
     borderWidth: 1,
     borderColor: 'gray',
