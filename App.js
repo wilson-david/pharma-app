@@ -2,12 +2,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import Index from './Index';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
+import Index from './views/Index';
+import ButtonView from './components/ButtonView';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App() { 
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -26,10 +27,10 @@ function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Hello</Text>
-      <Text style={styles.subTitle}>Sign In to your account</Text>
+      <Text style={styles.subTitle}>Iniciar sesion</Text>
       <TextInput style={styles.textInput} placeholder='example@gmail.com' />
       <TextInput style={styles.textInput} placeholder='Password' />
-      <Button title="Sign In" onPress={validarUser} />
+      <ButtonView onPress={validarUser} />
       <StatusBar style="auto" />
     </View>
   );

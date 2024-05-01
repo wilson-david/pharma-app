@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Button({ onPress }) {
+export default function ButtonView({ onPress }) {
 
     return(
 
@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
         width: '80%',
         height: 50, 
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius: 15
     }
 
 
