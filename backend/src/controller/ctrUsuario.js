@@ -1,8 +1,9 @@
-const getAll = async (req, res) => {
-  console.log("Entró en el controlador");
-  // Aquí puedes agregar cualquier lógica adicional que necesites
+const getUser = (req, res) => {
+  
+  const responseData = { message: 'Datos desde el servidor prueba' };
+  res.json(responseData);
 };
 
 module.exports = {
-  getAll,
+  getUser
 };

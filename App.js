@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Index from './views/Index';
 import ButtonView from './components/ButtonView';
+import axios from 'axios';
 
 const Stack = createStackNavigator();
 
@@ -20,9 +21,17 @@ export default function App() {
 }
 
 function LoginScreen({ navigation }) {
+
   const validarUser = async () => {
-    navigation.navigate('Index');
+    try {
+      const response = await axios.get('http://192.168.1.6:3000/user/getUser');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+    }
+    // navigation.navigate('Index');
   };
+  
 
   return (
     <View style={styles.container}>
