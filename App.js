@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
@@ -22,9 +22,18 @@ export default function App() {
 
 function LoginScreen({ navigation }) {
 
+  const [usuario, setUser] = useState('');
+
   const validarUser = async () => {
+   console.log(usuario);
+   
     try {
-      const response = await axios.get('http://192.168.1.6:3000/user/getUser');
+      const response = await axios.get('http://localhost:3000/user/getUser', {
+      // const response = await axios.get('http://192.168.1.6:3000/user/getUser', {
+      params: {
+        user: usuario
+      }
+    });
       console.log(response.data);
     } catch (error) {
       console.error('Error al obtener datos:', error);
@@ -37,7 +46,10 @@ function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.titulo}>Hello</Text>
       <Text style={styles.subTitle}>Iniciar sesion</Text>
-      <TextInput style={styles.textInput} placeholder='example@gmail.com' />
+      <TextInput style={styles.textInput} 
+        placeholder='example@gmail.com'
+        onChangeText={text => setUser(text)}
+      />
       <TextInput style={styles.textInput} placeholder='Password' />
       <ButtonView onPress={validarUser} />
       <StatusBar style="auto" />
