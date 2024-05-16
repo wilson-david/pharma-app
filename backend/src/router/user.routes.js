@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controller/ctrUsuario');
 
-router.get('/getUser', userCtrl.getUser);
+router.post('/getUser', userCtrl.getUser);
 
 module.exports = router;
 

@@ -23,23 +23,23 @@ export default function App() {
 function LoginScreen({ navigation }) {
 
   const [usuario, setUser] = useState('');
+  const [password, setPassword] = useState('');
 
   const validarUser = async () => {
-   console.log(usuario);
-   
     try {
-      const response = await axios.get('http://localhost:3000/user/getUser', {
-      // const response = await axios.get('http://192.168.1.6:3000/user/getUser', {
-      params: {
-        user: usuario
-      }
-    });
-      console.log(response.data);
+      const response = await axios.post('http://192.168.1.3:3000/user/getUser', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
+        user: usuario,
+        password: password
+
+      });
+      console.log(response.data[0]['nombre']);
+      //navigation.navigate('Index');
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
-    // navigation.navigate('Index');
   };
+  
+  
   
 
   return (
@@ -50,7 +50,9 @@ function LoginScreen({ navigation }) {
         placeholder='example@gmail.com'
         onChangeText={text => setUser(text)}
       />
-      <TextInput style={styles.textInput} placeholder='Password' />
+      <TextInput style={styles.textInput}
+        placeholder='Password'
+        onChangeText={text => setPassword(text)} />
       <ButtonView onPress={validarUser} />
       <StatusBar style="auto" />
     </View>
