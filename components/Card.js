@@ -1,26 +1,38 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Card({ orden, direccion, contacto,fecha }) {
+export default function Card({data, orden, direccion, contacto, fecha, onLongPress }) {
+
+  useEffect(() => {
+    if (Array.isArray(data)) {
+
+      
+    }
+  }, []);
+
+
+
   return (
-    <View style={styles.cardContainer}>
-      <View style={styles.row}>
-        <Text style={styles.label}>Orden:</Text>
-        <Text style={styles.value}>{orden}</Text>
+    <TouchableOpacity onLongPress={onLongPress}>
+      <View style={styles.cardContainer}>
+        <View style={styles.row}>
+          <Text style={styles.label}>Orden:</Text>
+          <Text style={styles.value}>{orden}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Dirección:</Text>
+          <Text style={styles.value}>{direccion}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Contacto:</Text>
+          <Text style={styles.value}>{contacto}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Fecha:</Text>
+          <Text style={styles.value}>{fecha}</Text>
+        </View>
       </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Dirección:</Text>
-        <Text style={styles.value}>{direccion}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Contacto:</Text>
-        <Text style={styles.value}>{contacto}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Fecha:</Text>
-        <Text style={styles.value}>{fecha}</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

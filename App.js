@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import Index from './views/Index';
 import ButtonView from './components/ButtonView';
 import axios from 'axios';
@@ -26,17 +26,30 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const validarUser = async () => {
-    try {
-      const response = await axios.post('http://192.168.1.3:3000/user/getUser', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
-        user: usuario,
-        password: password
 
-      });
-      console.log(response.data[0]['nombre']);
-      //navigation.navigate('Index');
-    } catch (error) {
-      console.error('Error al obtener datos:', error);
-    }
+    navigation.navigate('Index');
+
+
+    // try {
+    //   const response = await axios.post('http://192.168.1.3:3000/user/getUser', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
+    //     user: usuario,
+    //     password: password
+
+    //   });
+
+    //   if(("juanito" == usuario && "123" == password)){
+    //   // if((response.data[0]['usuario'] == usuario && response.data[0]['contrasenia'] == password)){
+    //     navigation.navigate('Index');
+    //     console.log("entro en el if");
+    //   } else {
+    //     console.log("entro en el no");
+    //     Alert.alert('Error', 'Usuario o contraseña incorrectos');
+    //   }
+      
+    //   //navigation.navigate('Index');
+    // } catch (error) {
+    //   console.error('Error al obtener datos:', error);
+    // }
   };
   
   
