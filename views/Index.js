@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Card from '../components/Card';
+import axios from 'axios';
 
 export default function Index() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [dataPedido, setDataPedido] = useState({ datos: [] });
+  const [dataPedido, setDataPedido] = useState([]); // Inicializa como un array vacío
 
   const handleLongPress = () => {
     setModalVisible(true);
@@ -16,17 +17,12 @@ export default function Index() {
     setModalVisible(false);
   };
 
-
   const getPedidos = async () => {
-
-    navigation.navigate('Index');
     try {
-      const response = await axios.get('http://192.168.1.3:3000/user/getPedido', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
+      const response = await axios.get('http://192.168.1.3:3000/user/getPedido', {
         user: 'prba'
       });
-
-      // setDataPedido(response.data);
-    console.log(response.data);
+      setDataPedido(response.data); // Almacena los datos obtenidos en el estado
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
@@ -34,18 +30,24 @@ export default function Index() {
 
   useEffect(() => {
     getPedidos();
-}, []);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Card 
-      data = {dataPedido}
-        orden="1243" 
-        direccion="calle 12" 
-        contacto="310" 
-        fecha="12-02-2024" 
-        onLongPress={handleLongPress}
-      />
+      <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
+        {dataPedido.map((pedido, index) => (
+          <Card 
+            key={index}
+            orden={index + 1}
+            direccion="calle 12"
+            contacto="310"
+            fecha="12-02-2024"
+            nombre={pedido.nombre}
+            precio={pedido.precio}
+            onLongPress={handleLongPress}
+          />
+        ))}
+      </ScrollView>
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
         <Text style={styles.buttonText}>Volver</Text>
       </TouchableOpacity>
@@ -83,13 +85,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 150,
+    marginTop: 50,
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    paddingVertical: 20,
+    marginTop: -20, // Margen superior añadido al contenedor del ScrollView
+  },
+  scrollView: {
+    height: 300, // Ajusta la altura según sea necesario
+    width: '90%', // Ajusta el ancho según sea necesario
   },
   button: {
     backgroundColor: 'blue',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 30,
+    marginTop: 100, // Margen superior añadido al botón
+    alignSelf: 'center',
   },
   buttonText: {
     color: 'white',

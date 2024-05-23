@@ -1,17 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Card({data, orden, direccion, contacto, fecha, onLongPress }) {
+export default function Card({ orden, direccion, contacto, fecha, nombre, precio, onLongPress }) {
 
-  useEffect(() => {
-    if (Array.isArray(data)) {
-
-      
-    }
-  }, []);
-
-
-
+  
   return (
     <TouchableOpacity onLongPress={onLongPress}>
       <View style={styles.cardContainer}>
@@ -30,6 +22,14 @@ export default function Card({data, orden, direccion, contacto, fecha, onLongPre
         <View style={styles.row}>
           <Text style={styles.label}>Fecha:</Text>
           <Text style={styles.value}>{fecha}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Nombre:</Text>
+          <Text style={styles.value}>{nombre}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Precio:</Text>
+          <Text style={styles.value}>{precio}</Text>
         </View>
       </View>
     </TouchableOpacity>
