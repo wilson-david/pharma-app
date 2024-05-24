@@ -26,31 +26,30 @@ function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
 
   const validarUser = async () => {
-
-    navigation.navigate('Index');
-
-
-    // try {
-    //   const response = await axios.post('http://192.168.1.3:3000/user/getUser', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
-    //     user: usuario,
-    //     password: password
-
-    //   });
-
-    //   if(("juanito" == usuario && "123" == password)){
-    //   // if((response.data[0]['usuario'] == usuario && response.data[0]['contrasenia'] == password)){
-    //     navigation.navigate('Index');
-    //     console.log("entro en el if");
-    //   } else {
-    //     console.log("entro en el no");
-    //     Alert.alert('Error', 'Usuario o contraseña incorrectos');
-    //   }
-      
-    //   //navigation.navigate('Index');
-    // } catch (error) {
-    //   console.error('Error al obtener datos:', error);
-    // }
+    try {
+      const response = await axios.post('http://192.168.1.3:3000/user/getUser', {
+        user: usuario,
+        password: password
+      });
+  
+      console.log(response.data);
+  
+      // Verifica si response.data está vacío
+      if (response.data.length === 0) {
+        Alert.alert('Error', 'Usuario no existe');
+      } else {
+        // Verifica si las credenciales son correctas
+        if (response.data[0]['usuario'] == usuario && response.data[0]['contrasenia'] == password) {
+          navigation.navigate('Index', { usuario });
+        } else {
+          Alert.alert('Error', 'Usuario o contraseña incorrectos');
+        }
+      }
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+    }
   };
+  
   
   
   

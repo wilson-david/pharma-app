@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute  } from '@react-navigation/native';
 import Card from '../components/Card';
 import axios from 'axios';
 
 export default function Index() {
   const navigation = useNavigation();
+  const route = useRoute(); // Hook para obtener los parámetros de navegación
+  const { usuario } = route.params; // Accede al parámetro 'usuario'
+
   const [modalVisible, setModalVisible] = useState(false);
   const [dataPedido, setDataPedido] = useState([]); // Inicializa como un array vacío
   const [id, setId] = useState(0);
 
   const handleLongPress = (orderId) => {
     setId(orderId);
-    console.log("Long press en la tarjeta con orderId:", orderId);
     setModalVisible(true);
   };
   
@@ -52,6 +54,8 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+
+      <Text style={styles.modalText}>Bienvenido: <Text style={{ fontWeight: 'bold' }}>{usuario}</Text></Text>
       <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
         {dataPedido.map((pedido, index) => (
           <Card 
@@ -80,7 +84,7 @@ export default function Index() {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Opciones {id}</Text>
+                <Text style={styles.modalText}>Orden  #{id}</Text>
                 <TouchableOpacity style={styles.modalButton} onPress={cambioEstado}>
                   <Text style={styles.modalButtonText}>Entregado </Text>
                 </TouchableOpacity>
