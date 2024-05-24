@@ -8,13 +8,31 @@ export default function Index() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [dataPedido, setDataPedido] = useState([]); // Inicializa como un array vacío
+  const [id, setId] = useState(0);
 
-  const handleLongPress = () => {
+  const handleLongPress = (orderId) => {
+    setId(orderId);
+    console.log("Long press en la tarjeta con orderId:", orderId);
     setModalVisible(true);
   };
+  
 
   const handleCloseModal = () => {
     setModalVisible(false);
+  };
+
+  const cambioEstado = async () => {
+    try {
+      const response = await axios.post('http://192.168.1.3:3000/user/setEstado', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
+        ordenId: id
+
+      });
+      console.log(response.data);
+      setModalVisible(false);
+      getPedidos();
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+    }
   };
 
   const getPedidos = async () => {
@@ -38,13 +56,13 @@ export default function Index() {
         {dataPedido.map((pedido, index) => (
           <Card 
             key={index}
-            orden={index + 1}
-            direccion="calle 12"
-            contacto="310"
-            fecha="12-02-2024"
+            orden={pedido.id_ordenes}
+            direccion={pedido.direccion}
+            contacto={pedido.telefono}
+            fecha={pedido.fecha}
             nombre={pedido.nombre}
             precio={pedido.precio}
-            onLongPress={handleLongPress}
+            onLongPress={() => handleLongPress(pedido.id_ordenes)} // Pasar orderId como argumento
           />
         ))}
       </ScrollView>
@@ -62,12 +80,9 @@ export default function Index() {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Opciones</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
-                  <Text style={styles.modalButtonText}>Opción 1</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
-                  <Text style={styles.modalButtonText}>Opción 2</Text>
+                <Text style={styles.modalText}>Opciones {id}</Text>
+                <TouchableOpacity style={styles.modalButton} onPress={cambioEstado}>
+                  <Text style={styles.modalButtonText}>Entregado </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
                   <Text style={styles.modalButtonText}>Cerrar</Text>
