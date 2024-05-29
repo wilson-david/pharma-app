@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { useNavigation, useRoute  } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next'; 
 import Card from '../components/Card';
 import axios from 'axios';
 
 export default function Index() {
   const navigation = useNavigation();
-  const route = useRoute(); // Hook para obtener los parámetros de navegación
-  const { usuario } = route.params; // Accede al parámetro 'usuario'
+  const route = useRoute(); 
+  const { usuario } = route.params; 
+  const { t } = useTranslation(); 
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [dataPedido, setDataPedido] = useState([]); // Inicializa como un array vacío
+  const [dataPedido, setDataPedido] = useState([]); 
   const [id, setId] = useState(0);
 
   const handleLongPress = (orderId) => {
     setId(orderId);
     setModalVisible(true);
   };
-  
 
   const handleCloseModal = () => {
     setModalVisible(false);
@@ -25,7 +26,7 @@ export default function Index() {
 
   const cambioEstado = async () => {
     try {
-      const response = await axios.post('http://192.168.1.3:3000/user/setEstado', {//la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
+      const response = await axios.post('http://192.168.1.4:3000/user/setEstado', {
         ordenId: id
 
       });
@@ -39,10 +40,10 @@ export default function Index() {
 
   const getPedidos = async () => {
     try {
-      const response = await axios.get('http://192.168.1.3:3000/user/getPedido', {
+      const response = await axios.get('http://192.168.1.4:3000/user/getPedido', {
         user: 'prba'
       });
-      setDataPedido(response.data); // Almacena los datos obtenidos en el estado
+      setDataPedido(response.data); 
     } catch (error) {
       console.error('Error al obtener datos:', error);
     }
@@ -55,7 +56,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
 
-      <Text style={styles.modalText}>Bienvenido: <Text style={{ fontWeight: 'bold' }}>{usuario}</Text></Text>
+      <Text style={styles.modalText}>{t('welcome')} <Text style={{ fontWeight: 'bold' }}>{usuario}</Text></Text>
       <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
         {dataPedido.map((pedido, index) => (
           <Card 
@@ -66,12 +67,12 @@ export default function Index() {
             fecha={pedido.fecha}
             nombre={pedido.nombre}
             precio={pedido.precio}
-            onLongPress={() => handleLongPress(pedido.id_ordenes)} // Pasar orderId como argumento
+            onLongPress={() => handleLongPress(pedido.id_ordenes)} 
           />
         ))}
       </ScrollView>
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-        <Text style={styles.buttonText}>Volver</Text>
+        <Text style={styles.buttonText}>{t('goBackButton')}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -84,12 +85,12 @@ export default function Index() {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.modalView}>
-                <Text style={styles.modalText}>Orden  #{id}</Text>
+                <Text style={styles.modalText}>{t('order')} #{id}</Text>
                 <TouchableOpacity style={styles.modalButton} onPress={cambioEstado}>
-                  <Text style={styles.modalButtonText}>Entregado </Text>
+                  <Text style={styles.modalButtonText}>{t('delivered')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
-                  <Text style={styles.modalButtonText}>Cerrar</Text>
+                  <Text style={styles.modalButtonText}>{t('close')}</Text>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
@@ -99,6 +100,7 @@ export default function Index() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

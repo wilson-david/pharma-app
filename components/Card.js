@@ -1,34 +1,35 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importa useTranslation de react-i18next
 
 export default function Card({ orden, direccion, contacto, fecha, nombre, precio, onLongPress }) {
+  const { t } = useTranslation(); // Usa useTranslation para obtener t
 
-  
   return (
     <TouchableOpacity onLongPress={onLongPress}>
       <View style={styles.cardContainer}>
         <View style={styles.row}>
-          <Text style={styles.label}>Orden:</Text>
+          <Text style={styles.label}>{t('orderLabel')}:</Text>
           <Text style={styles.value}>{orden}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Dirección:</Text>
+          <Text style={styles.label}>{t('addressLabel')}:</Text>
           <Text style={styles.value}>{direccion}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Contacto:</Text>
+          <Text style={styles.label}>{t('contactLabel')}:</Text>
           <Text style={styles.value}>{contacto}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Fecha:</Text>
+          <Text style={styles.label}>{t('dateLabel')}:</Text>
           <Text style={styles.value}>{fecha}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Nombre:</Text>
+          <Text style={styles.label}>{t('nameLabel')}:</Text>
           <Text style={styles.value}>{nombre}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Precio:</Text>
+          <Text style={styles.label}>{t('priceLabel')}:</Text>
           <Text style={styles.value}>{precio}</Text>
         </View>
       </View>
