@@ -24,7 +24,7 @@ const getPedido = async (req, res) => {
       c.nombre || ' ' || c.apellidos AS nombre,
       c.telefono,
       c.direccion,
-      TO_CHAR(TO_TIMESTAMP(o.fecha_creacion, 'YYYY-MM-DD HH24:MI:SS'), 'DD/MM/YYYY') AS fecha
+      TO_CHAR(o.fecha_creacion, 'YYYY-MM-DD') AS fecha
       FROM 
         ordenes o 
       INNER JOIN 

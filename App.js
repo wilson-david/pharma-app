@@ -32,21 +32,21 @@
 
       const validarUser = async () => {
         try {
-          const response = await axios.post('http://192.168.1.4:3000/user/getUser', {
+          const response = await axios.post('http://192.168.1.4:3000/user/getUser', { //la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
             user: usuario,
             password: password
           });
-      
-          console.log(response.data);
-      
+          
           // Verifica si response.data está vacío
           if(usuario !="" && password !=""){
             if (response.data.length === 0) {
-              Alert.alert('Error', 'Usuario no existe');
+              Alert.alert('Error', t('alertUserNot'));
             } else {
               // Verifica si las credenciales son correctas
               if (response.data[0]['usuario'] == usuario && response.data[0]['contrasenia'] == password) {
                 navigation.navigate('Index', { usuario });
+                setUser(null);
+                setPassword(null);
               } else {
                 Alert.alert('Error', t('alertUser'));
               }
@@ -89,13 +89,13 @@
           justifyContent: 'center',
       },
       titulo: {
-          fontSize: 80,
+          fontSize: 50,
           color: '#000',
           fontWeight: 'bold',
       },
       subTitle: {
           fontSize: 30,
-          color: 'gray',
+          color: 'gray'
       },
       textInput: {
           borderWidth: 1,
@@ -104,7 +104,7 @@
           padding: 10,
           width: '80%',
           height: 50,
-          marginTop: 20,
+          marginTop: 60,
           borderRadius: 30,
           backgroundColor: '#fff',
       },

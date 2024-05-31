@@ -26,7 +26,7 @@ export default function Index() {
 
   const cambioEstado = async () => {
     try {
-      const response = await axios.post('http://192.168.1.4:3000/user/setEstado', {
+      const response = await axios.post('http://192.168.1.4:3000/user/setEstado', { //la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
         ordenId: id
 
       });
@@ -40,7 +40,7 @@ export default function Index() {
 
   const getPedidos = async () => {
     try {
-      const response = await axios.get('http://192.168.1.4:3000/user/getPedido', {
+      const response = await axios.get('http://192.168.1.4:3000/user/getPedido', { //la ip se tiene que cambiar, cada vez que se corre el proyecto da una ip
         user: 'prba'
       });
       setDataPedido(response.data); 

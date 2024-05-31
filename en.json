@@ -1,11 +1,12 @@
 {
-    "welcome": "Welcome: ",
+    "welcome": "Welcome ",
     "login": "Login",
     "emailPlaceholder": "example@gmail.com",
     "passwordPlaceholder": "Password",
     "loginButton": "Login",
     "alertUser": "user or password incorrect",
     "alertEmpty": "There are empty fields",
+    "alertUserNot": "The user does not exist",
     "orderLabel": "Order",
     "addressLabel": "Address",
     "contactLabel": "Contact",
